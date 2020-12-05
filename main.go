@@ -2,17 +2,14 @@ package main
 
 import "fmt"
 
-type tMatrix [5][5]int
-
 func main() {
+	type tMatrix [5][5]int
 	var matrix tMatrix
 
 	// Building the matrix
-	c := 0
 	for rowIndex, row := range matrix {
 		for columnIndex := range row {
-			c++
-			matrix[rowIndex][columnIndex] = c
+			matrix[rowIndex][columnIndex] = calculateFormula(rowIndex+1, columnIndex+1, 5, 5)
 		}
 	}
 
@@ -24,4 +21,36 @@ func main() {
 		}
 		fmt.Printf("\n ‾‾‾‾    ‾‾‾‾    ‾‾‾‾    ‾‾‾‾    ‾‾‾‾  ")
 	}
+}
+
+func calculateFormula(currentRow int, currentColumn int, maxRows int, maxColumns int) int {
+	// |---->
+	//     /
+	//    /
+	//   /
+	//  ---->|
+	// formula := maxColumns*(currentRow-1) + currentColumn
+
+	//  <----|
+	//   \
+	//    \
+	//     \
+	// |<----
+	// formula := maxColumns*(currentRow-1) + maxColumns - currentColumn + 1
+
+	// |<----
+	//     /
+	//    /
+	//   /
+	//  <----|
+	// formula := maxColumns*(maxRows-currentRow) + maxColumns - currentColumn + 1
+
+	//  ---->|
+	//   \
+	//    \
+	//     \
+	// |---->
+	formula := maxColumns*(maxRows-currentRow) + currentColumn
+
+	return formula
 }
